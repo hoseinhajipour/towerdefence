@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDropHandler
+public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDropHandler
 {
 
     public GameObject gameobject;
@@ -35,11 +34,11 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
             {
                 wordPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
-            GameObject clone= Instantiate(gameobject, wordPos, Quaternion.identity);
+            GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
             clone.tag = "own";
         }
         cameraHandler.enabled = true;
-    }    
+    }
 
     public void OnEndDrag(PointerEventData eventData)
     {
