@@ -1,0 +1,8 @@
+{
+  "logHandlers":[
+    {
+      "logHandlerClass": "co.ronash.pushe.internal.log.handlers.SentryHandler",
+      "logLevel": "ERROR"
+    }
+  ]
+}
