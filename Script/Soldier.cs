@@ -11,7 +11,7 @@ public class Soldier : MonoBehaviour
     public float damage_power = 10.0f;
     
 
-    GameObject enemyCastle;
+    public GameObject enemyCastle;
 
     string target_castle_tag = "enemy_Castle";
     string target_tag = "enemy";
@@ -21,7 +21,7 @@ public class Soldier : MonoBehaviour
 
     public float target_finder_raduis = 10.0f;
     public float lookat_Speed=10.0f;
-    Collider[] enemies;
+    public Collider[] enemies;
 
 
     public float atackRate = 1.0f;
@@ -40,7 +40,7 @@ public class Soldier : MonoBehaviour
         mask = LayerMask.GetMask("enemy");
         if (gameObject.tag == "enemy")
         {
-            target_tag = "own_castle";
+            target_castle_tag = "own_Castle";
             mask = LayerMask.GetMask("own");
             target_tag = "own";
             transform.eulerAngles = new Vector3(0, -90, 0);
@@ -51,7 +51,7 @@ public class Soldier : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("own");
             transform.eulerAngles = new Vector3(0, 90, 0);
         }
-        enemyCastle = GameObject.FindGameObjectWithTag(target_tag);
+        enemyCastle = GameObject.Find(target_castle_tag);
     }
 
     void Update()
@@ -75,7 +75,18 @@ public class Soldier : MonoBehaviour
             }
             else
             {
-                attack = false;
+                transform.LookAt(enemyCastle.transform);
+
+                current_traget = enemyCastle;
+                float dist = Vector3.Distance(transform.position, enemyCastle.transform.position);
+                if (dist <= near_enemy_distance)
+                {
+                    attack = true;
+                }
+                else
+                {
+                    attack = false;
+                }
             }
             if (attack == false)
             {
@@ -101,6 +112,9 @@ public class Soldier : MonoBehaviour
             {
                 dead = true;
                 Debug.Log("Soldier dead");
+
+                gameObject.tag = "dead";
+                gameObject.layer = 0;
                 Destroy(gameObject, 3);
             }
         }

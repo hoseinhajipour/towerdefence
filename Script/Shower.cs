@@ -83,6 +83,8 @@ public class Shower : MonoBehaviour
             if (health < 0)
             {
                 dead = true;
+                gameObject.tag = "dead";
+                gameObject.layer = 0;
                 Debug.Log("shower dead");
                 Destroy(gameObject, 3);
             }
