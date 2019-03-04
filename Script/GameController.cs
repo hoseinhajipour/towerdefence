@@ -1,15 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public GameObject win;
     public GameObject Defeat;
-
+    public Text player_name;
+    public Text enemy_name;
 
     void Start()
     {
+        if(PlayerPrefs.GetString("username") != null)
+        {
+            string username_ = PlayerPrefs.GetString("username");
+            Debug.Log(username_);
+            player_name.text = username_;
+        }
         
     }
 
