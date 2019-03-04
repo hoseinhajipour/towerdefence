@@ -15,7 +15,6 @@ public class GameController : MonoBehaviour
         if(PlayerPrefs.GetString("username") != null)
         {
             string username_ = PlayerPrefs.GetString("username");
-            Debug.Log(username_);
             player_name.text = username_;
         }
         
@@ -34,5 +33,9 @@ public class GameController : MonoBehaviour
     public void showDefeatPanel()
     {
         Defeat.SetActive(true);
+    }
+    public void setEnemyInfo(PlayerInfo info)
+    {
+        enemy_name.text = info.name;
     }
 }

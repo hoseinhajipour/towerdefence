@@ -6,7 +6,12 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 public class connection : MonoBehaviour {
 	public SocketIOComponent socket;
+    public GameController gameController;
     string check="";
+
+    public PlayerInfo own_info;
+    public PlayerInfo enemy_info;
+
     // Use this for initialization
 
     void Start () {
@@ -18,9 +23,9 @@ public class connection : MonoBehaviour {
 		socket.On ("LEFTTHESERVER", DestroyDisconnectPlayers);
 		socket.On ("GETLIST", GetList);
         socket.On("SHOOTING", OtherShooting);
+        socket.On("find_match_player", otherfind_match_player);
+        socket.On("find_match_player_not", otherfind_match_player_not);
     }
-	public
-		int i;
 	public void OnClickOnLineList(){
 		socket.Emit ("SENDLIST");
 	
@@ -40,8 +45,8 @@ public class connection : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		if (check == "check") {
 			Debug.Log ("Connected To The Server!");
-
-		} else {
+            onPlay();
+        } else {
 			Debug.Log ("Connecting...");
 			refresh();
 		}
@@ -50,25 +55,32 @@ public class connection : MonoBehaviour {
 	void reciveCon(SocketIOEvent evt){
 		check = jsonToString (evt.data.GetField ("name").ToString (), "\"");
 	}
-	string jsonToString(string target,string s){
-		string[] neS = Regex.Split (target, s);
-		return neS [1];
-	}
-	void refresh(){
+	
+    void refresh(){
 		if (check == "") {
 			StartCoroutine (connect ());
 		} 
 	}
-	public void OnclickPlay(){
+    public void onPlay()
+    {
         Dictionary<string, string> data = new Dictionary<string, string>();
-        Vector3 position = new Vector3(0, 0, 0);
-        data["position"] = position.x + "," + position.y + "," + position.z;
+        data["name"] = PlayerPrefs.GetString("username");
         socket.Emit("PLAY", new JSONObject(data));
     }
+    public void findmatchplayer(){
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data["id"] = own_info.id.ToString();
+        data["socketID"] = own_info.socketID;
+        socket.Emit("find_match_player", new JSONObject(data));
+    }
 	void OnPlay(SocketIOEvent evt){
-
-		Debug.Log (jsonToString(evt.data.GetField("name").ToString(),"\"")+" Welcome to Game!");
-	}
+        Debug.Log(evt.data);
+        Debug.Log(jsonToString(evt.data.GetField("name").ToString(), "\"") + " Welcome to Game!");
+        own_info.name = jsonToString(evt.data.GetField("name").ToString(), "\"");
+        own_info.socketID = jsonToString(evt.data.GetField("socketID").ToString(), "\"");
+        own_info.id = int.Parse(evt.data.GetField("id").ToString());
+        findmatchplayer();
+    }
 	void otherOnPlay(SocketIOEvent evt){
 		Debug.Log (jsonToString(evt.data.GetField("name").ToString(),"\"")+" Appaned to Game!");
 	}
@@ -78,6 +90,25 @@ public class connection : MonoBehaviour {
     public void Shooting(Transform firepos, Quaternion firepos_rotation, string guntype,float bulletSpeed)
     {
         Dictionary<string, string> data = new Dictionary<string, string>();
+    }
+
+    void otherfind_match_player(SocketIOEvent evt)
+    {
+       // gameController.
+        Debug.Log("battle ready");
+      //  Debug.Log(jsonToString(" match_player_id : " + evt.data.GetField("match_player_id").ToString(), "\""));
+
+        enemy_info.id = int.Parse(evt.data.GetField("id").ToString());
+        enemy_info.name = jsonToString(evt.data.GetField("name").ToString(), "\"");
+        enemy_info.socketID = jsonToString(evt.data.GetField("socketID").ToString(), "\"");
+
+        gameController.setEnemyInfo(enemy_info);
+       
+    }
+
+    void otherfind_match_player_not(SocketIOEvent evt)
+    {
+        Debug.Log("find match player not");
     }
 
     void DestroyDisconnectPlayers(SocketIOEvent evt){
@@ -101,5 +132,30 @@ public class connection : MonoBehaviour {
 		return newvector;
 	}
 
+
+    string jsonToStr(string target)
+    {
+        string s = "\"";
+        string[] neS = Regex.Split(target, s);
+        return neS[1];
+    }
+
+    string jsonToString(string target, string s)
+    {
+        string[] neS = Regex.Split(target, s);
+        return neS[1];
+    }
+    int jsonToInt(string target)
+    {
+        string s = "\"";
+        string[] neS = Regex.Split(target, s);
+        return int.Parse(neS[1]);
+    }
+    bool jsonToBool(string target)
+    {
+        string s = "\"";
+        string[] neS = Regex.Split(target, s);
+        return bool.Parse(neS[1]);
+    }
 }
  
