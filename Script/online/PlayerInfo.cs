@@ -10,4 +10,5 @@ public class PlayerInfo
     public string socketID;
     public int match_player_id;
     public bool on_play;
+    public string room_name;
 }

@@ -9,9 +9,13 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
     public GameObject gameobject;
 
     CameraHandler cameraHandler;
+    GameController gameController;
+    newConnection netconnection;
     private void Start()
     {
         cameraHandler = GameObject.Find("Main Camera").GetComponent<CameraHandler>();
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
     }
     public void OnDrag(PointerEventData eventData)
     {
@@ -35,11 +39,30 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
                 wordPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
             GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
-            clone.tag = "own";
+            clone.tag = gameController.i_am_a;
+
+
+            attack_info attack_Info_ = new attack_info();
+            attack_Info_.name = "Shower";
+            attack_Info_.tag = gameController.i_am_a;
+            attack_Info_.room_name = gameController.room_name;
+            attack_Info_.pos_x = wordPos.x.ToString();
+            attack_Info_.pos_y = wordPos.y.ToString();
+            attack_Info_.pos_z = wordPos.z.ToString();
+            netconnection.attackReq(attack_Info_);
         }
         cameraHandler.enabled = true;
     }
-
+    public void directCreate(attack_info attack_Info_)
+    {
+        Vector3 wordPos = new Vector3(
+            float.Parse(attack_Info_.pos_x),
+            float.Parse(attack_Info_.pos_y), 
+            float.Parse(attack_Info_.pos_z)
+            );
+        GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
+        clone.tag = attack_Info_.tag;
+    }
     public void OnEndDrag(PointerEventData eventData)
     {
         transform.localPosition = Vector3.zero;

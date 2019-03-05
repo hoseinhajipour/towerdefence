@@ -4,6 +4,8 @@ using SocketIO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class connection : MonoBehaviour {
 	public SocketIOComponent socket;
     public GameController gameController;
@@ -103,12 +105,17 @@ public class connection : MonoBehaviour {
         enemy_info.socketID = jsonToString(evt.data.GetField("socketID").ToString(), "\"");
 
         gameController.setEnemyInfo(enemy_info);
-       
+        gameController.i_am_a = jsonToString(evt.data.GetField("owner").ToString(), "\"");
+        gameController.hide_find_player_match_panel();
+
+
     }
 
     void otherfind_match_player_not(SocketIOEvent evt)
     {
         Debug.Log("find match player not");
+        Debug.Log(evt.data);
+        SceneManager.LoadScene("menu");
     }
 
     void DestroyDisconnectPlayers(SocketIOEvent evt){
