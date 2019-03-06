@@ -19,6 +19,8 @@ public class newConnection : MonoBehaviour
 
     PlayerInfo own_info;
     PlayerInfo enemy_info;
+
+    public PlayerInfo current_user =new PlayerInfo();
     public GameController gameController;
     public ShowerGenarator ShowerGenarator_;
     public SoldierGenerator SoldierGenerator_;
@@ -66,10 +68,12 @@ public class newConnection : MonoBehaviour
     {
         Debug.Log("ready for play");
         Debug.Log(evt.data);
+        current_user.id= int.Parse(evt.data.GetField("id").ToString());
+        current_user.name = evt.data.GetField("name").ToString();
+    
         find_match_player();
     }
-   
-   
+
     void reciveCon(SocketIOEvent evt)
     {
         check = jsonToString(evt.data.GetField("name").ToString(), "\"");
@@ -86,14 +90,11 @@ public class newConnection : MonoBehaviour
     {
         Debug.Log("new other attack");
         Debug.Log(evt.data);
-
         attack_info attack_Info_ = new attack_info();
         attack_Info_.name =  jsonToString(evt.data.GetField("name").ToString(), "\"");
         attack_Info_.tag =  jsonToString(evt.data.GetField("tag").ToString(), "\"");
-        attack_Info_.pos_x = jsonToString(evt.data.GetField("pos_x").ToString(), "\"");
-        attack_Info_.pos_y =  jsonToString(evt.data.GetField("pos_y").ToString(), "\"");
-        attack_Info_.pos_z =  jsonToString(evt.data.GetField("pos_z").ToString(), "\"");
-        Debug.Log(attack_Info_.name);
+        attack_Info_.position =jsonToString(evt.data.GetField("position").ToString(), "\"");
+
         if (attack_Info_.name == "Shower")
         {
             ShowerGenarator_.directCreate(attack_Info_);
@@ -101,8 +102,6 @@ public class newConnection : MonoBehaviour
         {
             SoldierGenerator_.directCreate(attack_Info_);
         }
-
-        
     }
 
 
@@ -132,6 +131,7 @@ public class newConnection : MonoBehaviour
                 Dictionary<string, string> data = new Dictionary<string, string>();
                 data["room_name"] = match_Result_Data.room_name;
                 socket.Emit("endbattle", new JSONObject(data));
+                SceneManager.LoadScene("menu");
             }
             else
             {
@@ -185,6 +185,7 @@ public class newConnection : MonoBehaviour
     }
     
 
+
     void refresh()
     {
         if (check == "")
@@ -192,8 +193,23 @@ public class newConnection : MonoBehaviour
             StartCoroutine(connect());
         }
     }
-    
 
+
+    public void do_end_ballte()
+    {
+        StartCoroutine(endBattle());
+    }
+    IEnumerator endBattle()
+    {
+        yield return new WaitForSeconds(1.0f);
+        Debug.Log("do end battle");
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data["room_name"] = match_Result_Data.room_name;
+
+        socket.Emit("endbattle", new JSONObject(data));
+        SceneManager.LoadScene("menu");
+
+    }
     public Vector3 JsonToVec(string target)
     {
         Vector3 newvector;

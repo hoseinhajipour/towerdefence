@@ -8,11 +8,20 @@ public class MainMenuController : MonoBehaviour
 {
 
     public InputField username;
-
+    public Text coin_area;
     void Start()
     {
-        string username_ = PlayerPrefs.GetString("username");
-        username.text= username_;
+        if (username != null)
+        {
+            string username_ = PlayerPrefs.GetString("username");
+            username.text = username_;
+        }
+
+        if(coin_area != null)
+        {
+            coin_area.text = PlayerPrefs.GetInt("coin").ToString();
+        }
+        
     }
 
     // Update is called once per frame
@@ -29,5 +38,19 @@ public class MainMenuController : MonoBehaviour
         PlayerPrefs.Save();
 
         SceneManager.LoadScene("main");
+    }
+
+    public void LoadShopBtn()
+    {
+        SceneManager.LoadScene("shop");
+    }
+
+    public void LoadupdatesBtn()
+    {
+        SceneManager.LoadScene("updates");
+    }
+    public void LoadMenuBtn()
+    {
+        SceneManager.LoadScene("menu");
     }
 }

@@ -12,13 +12,19 @@ public class GameController : MonoBehaviour
     public Text enemy_name;
     public GameObject find_player_match;
     public string i_am_a="own";
-    public Text youare;
+   
 
 
     public PlayerInfo own_info;
     public PlayerInfo enemy_info;
 
     public string room_name = "";
+
+    public int total_kill = 0;
+    public int total_Coin = 0;
+
+    public Text total_kill_text;
+    public Text total_Coin_text;
 
     void Start()
     {
@@ -34,15 +40,18 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        youare.text = i_am_a;
+        total_kill_text.text = total_kill.ToString();
+        total_Coin_text.text = total_Coin.ToString();
     }
 
     public void showWinPanel()
     {
+        saveGameResult();
         win.SetActive(true);
     }
     public void showDefeatPanel()
     {
+        saveGameResult();
         Defeat.SetActive(true);
     }
     public void setEnemyInfo(PlayerInfo info)
@@ -59,4 +68,14 @@ public class GameController : MonoBehaviour
         find_player_match.SetActive(false);
     }
 
+    public void saveGameResult()
+    {
+        int coin = PlayerPrefs.GetInt("coin");
+        coin += total_Coin;
+        PlayerPrefs.SetInt("coin", coin);
+
+        int total_kill_ = PlayerPrefs.GetInt("total_kill");
+        total_kill_ += total_kill;
+        PlayerPrefs.SetInt("total_kill", total_kill_);
+    }
 }

@@ -10,10 +10,13 @@ public class Castle : MonoBehaviour
     bool dead = false;
     public Slider health_ui;
     public GameController gameController;
+    newConnection netconnection;
 
+    public int coin_for_dead_me = 10;
     void Start()
     {
-    //    gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        //    gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
     }
 
     void Update()
@@ -36,14 +39,29 @@ public class Castle : MonoBehaviour
                 {
                     gameController.showDefeatPanel();
                 }
+                end_game_save();
+                netconnection.do_end_ballte();
             }
         }else{
-
+            
         }
     }
 
     public void ApplyDamage(float damage)
     {
         this.health -= damage;
+    }
+
+    public void end_game_save()
+    {
+        GameController gb = GameObject.Find("GameController").GetComponent<GameController>();
+        gb.total_kill += 1;
+
+        if (gameObject.tag == gb.i_am_a)
+        {
+            gb.total_Coin += coin_for_dead_me;
+        }
+
+        gb.saveGameResult();
     }
 }

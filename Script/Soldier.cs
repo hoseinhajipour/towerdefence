@@ -33,8 +33,9 @@ public class Soldier : MonoBehaviour
     public float near_enemy_distance = 1.0f;
     bool attack = false;
     bool dead = false;
-
     GameObject current_traget;
+
+    public int coin_for_dead_me=1;
     void Start()
     {
         mask = LayerMask.GetMask("enemy");
@@ -112,7 +113,7 @@ public class Soldier : MonoBehaviour
             {
                 dead = true;
                 Debug.Log("Soldier dead");
-
+                reward_per_kill();
                 gameObject.tag = "dead";
                 gameObject.layer = 0;
                 Destroy(gameObject, 3);
@@ -120,7 +121,9 @@ public class Soldier : MonoBehaviour
         }
         else
         {
+           
             //play dead animation
+
         }
     }
 
@@ -129,4 +132,15 @@ public class Soldier : MonoBehaviour
         this.health -= damage;
     }
 
+
+    public void reward_per_kill()
+    {
+        GameController gb= GameObject.Find("GameController").GetComponent<GameController>();
+        gb.total_kill += 1;
+
+        if(gameObject.tag == gb.i_am_a)
+        {
+            gb.total_Coin += coin_for_dead_me;
+        }
+    }
 }
