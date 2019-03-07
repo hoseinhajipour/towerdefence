@@ -24,6 +24,8 @@ public class newConnection : MonoBehaviour
     public GameController gameController;
     public ShowerGenarator ShowerGenarator_;
     public SoldierGenerator SoldierGenerator_;
+
+    public Text debuger;
     void Start()
     {
         StartCoroutine(connect());
@@ -81,9 +83,11 @@ public class newConnection : MonoBehaviour
 
     public void attackReq(attack_info attack_Info_)
     {
+        Debug.Log("other attack recived");
         Dictionary<string, string> data = new Dictionary<string, string>();
         string attack_Info_str = JsonUtility.ToJson(attack_Info_, true);
         Debug.Log(attack_Info_str);
+        debuger.text += "get :" + attack_Info_str;
         socket.Emit("attack", new JSONObject(attack_Info_str));
     }
     void onOtherAttack(SocketIOEvent evt)

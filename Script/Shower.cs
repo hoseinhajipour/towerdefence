@@ -9,9 +9,6 @@ public class Shower : MonoBehaviour
     public float damage_power = 10.0f;
     public float speed_shoot = 1.0f;
     public float raduis_cover = 1.0f;
-    
-
-
     Transform head;
 
     public float lookat_Speed;
@@ -25,32 +22,31 @@ public class Shower : MonoBehaviour
 
     string target_tag = "enemy";
     LayerMask mask;
-
-
-
     public Slider health_ui;
     bool dead = false;
+
+    public AudioClip attack_sound;
+    public AudioClip dead_sound;
+    AudioSource audio;
 
     void Start()
     {
         head = transform.Find("head").transform;
         fire_pos = head.Find("fire_pos").transform;
-
-
         if (gameObject.tag == "enemy")
         {
             target_tag = "own";
             mask = LayerMask.GetMask("own");
-
             gameObject.layer = LayerMask.NameToLayer("enemy");
         }
         else
         {
             target_tag = "enemy";
             mask = LayerMask.GetMask("enemy");
-
             gameObject.layer = LayerMask.NameToLayer("own");
         }
+
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
 
@@ -70,6 +66,9 @@ public class Shower : MonoBehaviour
 
                 if (Time.time > nextFire)
                 {
+                    audio.clip = attack_sound;
+                    audio.Play();
+
                     Rigidbody bullet_clone = Instantiate(bullet, fire_pos.position, fire_pos.rotation) as Rigidbody;
                     bullet_clone.GetComponent<bullet>().parnet_target_tag = target_tag;
                     bullet_clone.GetComponent<bullet>().damage_power = damage_power;
@@ -87,6 +86,9 @@ public class Shower : MonoBehaviour
                 gameObject.layer = 0;
                 Debug.Log("shower dead");
                 Destroy(gameObject, 3);
+
+                audio.clip = dead_sound;
+                audio.Play();
             }
         }
         else

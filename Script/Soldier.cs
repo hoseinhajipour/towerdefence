@@ -9,8 +9,6 @@ public class Soldier : MonoBehaviour
     public float health = 100;
     public float speed_movment = 1.0f;
     public float damage_power = 10.0f;
-    
-
     public GameObject enemyCastle;
 
     string target_castle_tag = "enemy_Castle";
@@ -21,7 +19,7 @@ public class Soldier : MonoBehaviour
 
     public float target_finder_raduis = 10.0f;
     public float lookat_Speed=10.0f;
-    public Collider[] enemies;
+    Collider[] enemies;
 
 
     public float atackRate = 1.0f;
@@ -36,8 +34,15 @@ public class Soldier : MonoBehaviour
     GameObject current_traget;
 
     public int coin_for_dead_me=1;
+
+    public Animator anim;
+
+    public AudioClip attack_sound;
+    public AudioClip dead_sound;
+    AudioSource audio;
     void Start()
     {
+
         mask = LayerMask.GetMask("enemy");
         if (gameObject.tag == "enemy")
         {
@@ -53,6 +58,8 @@ public class Soldier : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 90, 0);
         }
         enemyCastle = GameObject.Find(target_castle_tag);
+
+        audio = gameObject.GetComponent<AudioSource>();
     }
 
     void Update()
@@ -92,13 +99,18 @@ public class Soldier : MonoBehaviour
             if (attack == false)
             {
                 //path finding
+                anim.Play("Run");
                 transform.position += transform.forward * speed_movment * Time.deltaTime;
             }
             else
             {
                 if (Time.time > nextAttack)
                 {
-                   float rnd_dmg=  Random.Range(damage_power/1.2f, damage_power);
+                    anim.Play("SlashAttack01");
+                    audio.clip = attack_sound;
+                    audio.Play();
+
+                    float rnd_dmg=  Random.Range(damage_power/1.2f, damage_power);
                     current_traget.SendMessage("ApplyDamage", damage_power);
                     Debug.Log("attack");
                     nextAttack = Time.time + atackRate;
@@ -116,14 +128,19 @@ public class Soldier : MonoBehaviour
                 reward_per_kill();
                 gameObject.tag = "dead";
                 gameObject.layer = 0;
+                audio.clip = dead_sound;
+                audio.Play();
+                //play dead animation
+                anim.SetTrigger("Die");
+                anim.Play("Die");
+
+
                 Destroy(gameObject, 3);
             }
         }
         else
         {
-           
-            //play dead animation
-
+            
         }
     }
 
@@ -143,4 +160,5 @@ public class Soldier : MonoBehaviour
             gb.total_Coin += coin_for_dead_me;
         }
     }
+    
 }

@@ -12,6 +12,11 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
     CameraHandler cameraHandler;
     GameController gameController;
     newConnection netconnection;
+
+    public GameObject Left_area;
+    public GameObject right_area;
+
+    public GameObject area_create;
     private void Start()
     {
         cameraHandler = GameObject.Find("Main Camera").GetComponent<CameraHandler>();
@@ -20,8 +25,10 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
     }
     public void OnDrag(PointerEventData eventData)
     {
+        setCreate_side();
         transform.position = Input.mousePosition;
         cameraHandler.enabled = false;
+        area_create.SetActive(true);
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -31,32 +38,32 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
             Vector3 wordPos;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000f))
+            int layer_mask = LayerMask.GetMask("area_create");
+            if (Physics.Raycast(ray, out hit, 1000f, layer_mask))
             {
                 wordPos = hit.point;
+
+                GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
+                clone.tag = gameController.i_am_a;
+
+
+                attack_info attack_Info_ = new attack_info();
+                attack_Info_.name = "Shower";
+                attack_Info_.tag = gameController.i_am_a;
+                attack_Info_.room_name = gameController.room_name;
+                attack_Info_.position = slashcheck(Round(wordPos.x, 4) + "," + Round(wordPos.y, 4) + "," + Round(wordPos.z, 4));
+                netconnection.attackReq(attack_Info_);
+
             }
-            else
-            {
-                wordPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            }
-            GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
-            clone.tag = gameController.i_am_a;
-
-
-            attack_info attack_Info_ = new attack_info();
-            attack_Info_.name = "Shower";
-            attack_Info_.tag = gameController.i_am_a;
-            attack_Info_.room_name = gameController.room_name;
-            attack_Info_.position = slashcheck(Round(wordPos.x, 4) + "," + Round(wordPos.y, 4) + "," + Round(wordPos.z, 4));
-
-
-            netconnection.attackReq(attack_Info_);
+            
+           
         }
         cameraHandler.enabled = true;
+        area_create.SetActive(false);
     }
     public void directCreate(attack_info attack_Info_)
     {
-        Vector2 new_pos = JsonToVec(attack_Info_.position);
+        Vector3 new_pos = JsonToVec(attack_Info_.position);
         GameObject clone = Instantiate(gameobject, new_pos, Quaternion.identity);
         clone.tag = attack_Info_.tag;
     }
@@ -80,5 +87,16 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
     public string slashcheck(string str)
     {
         return str.Replace('/', '.');
+    }
+    public void setCreate_side()
+    {
+        if (gameController.i_am_a == "own")
+        {
+            area_create = Left_area;
+        }
+        else
+        {
+            area_create = right_area;
+        }
     }
 }
