@@ -34,6 +34,8 @@ public class newConnection : MonoBehaviour
         socket.On("PLAY", OnPlay);
         socket.On("ATTACKO", onOtherAttack);
         socket.On("find_match_player", onfind_match_player);
+
+        socket.On("disconnect", onDisconnect);
     }
 
     IEnumerator wait3()
@@ -214,6 +216,13 @@ public class newConnection : MonoBehaviour
         SceneManager.LoadScene("menu");
 
     }
+
+    public void onDisconnect(SocketIOEvent evt)
+    {
+        Debug.Log("other user Disconnect");
+
+        do_end_ballte();
+    }
     public Vector3 JsonToVec(string target)
     {
         Vector3 newvector;
@@ -260,15 +269,19 @@ public class newConnection : MonoBehaviour
             gameController.own_info = match_Result_Data.userlist[0];
             gameController.enemy_info = match_Result_Data.userlist[1];
             gameController.i_am_a= "own";
+            gameController.player_name.text = gameController.own_info.name;
+            gameController.enemy_name.text = gameController.enemy_info.name;
         }
         else
         {
             gameController.own_info = match_Result_Data.userlist[1];
             gameController.enemy_info = match_Result_Data.userlist[0];
             gameController.i_am_a = "enemy";
+
+            gameController.player_name.text = gameController.enemy_info.name; 
+            gameController.enemy_name.text = gameController.own_info.name;
         }
-        gameController.player_name.text = gameController.own_info.name;
-        gameController.enemy_name.text = gameController.enemy_info.name;
+        
         gameController.room_name = match_Result_Data.room_name;
         gameController.hide_find_player_match_panel();
     }
