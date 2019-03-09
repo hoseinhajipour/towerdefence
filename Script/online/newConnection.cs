@@ -34,7 +34,7 @@ public class newConnection : MonoBehaviour
         socket.On("PLAY", OnPlay);
         socket.On("ATTACKO", onOtherAttack);
         socket.On("find_match_player", onfind_match_player);
-
+        socket.On("dead", onDead);
         socket.On("disconnect", onDisconnect);
     }
 
@@ -177,7 +177,7 @@ public class newConnection : MonoBehaviour
             for (int i=0;i< data["userlist"].Count; i++)
             {
                 PlayerInfo temp = new PlayerInfo();
-                temp.id = data["userlist"][i]["id"];
+                temp.id = int.Parse(data["userlist"][i]["id"]);
                 temp.socketID = data["userlist"][i]["socketID"];
                 temp.name = data["userlist"][i]["name"];
                 temp.room_name = data["userlist"][i]["room_name"];
@@ -223,6 +223,33 @@ public class newConnection : MonoBehaviour
 
         do_end_ballte();
     }
+
+    public void DoDead(DeadInfo deadInfo)
+    {
+        Debug.Log("Do dead");
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        data["room_name"] = deadInfo.room_name;
+        data["object_name"] = deadInfo.object_name;
+        data["tag"] = deadInfo.tag;
+        socket.Emit("dead", new JSONObject(data));
+    }
+    public void onDead(SocketIOEvent evt)
+    {
+
+        string object_name = jsonToString(evt.data.GetField("object_name").ToString(), "\"");
+        string tag = jsonToString(evt.data.GetField("tag").ToString(), "\"");
+        GameObject object_found= GameObject.Find(object_name);
+        if (object_found != null)
+        {
+            Debug.Log("object deleted");
+            Destroy(object_found);
+        }
+        else
+        {
+            Debug.Log("object not found for delete");
+        }
+    }
+    
     public Vector3 JsonToVec(string target)
     {
         Vector3 newvector;
@@ -285,4 +312,6 @@ public class newConnection : MonoBehaviour
         gameController.room_name = match_Result_Data.room_name;
         gameController.hide_find_player_match_panel();
     }
+
+
 }

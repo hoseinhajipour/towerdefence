@@ -19,6 +19,8 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
     public GameObject right_area;
 
     public GameObject area_create;
+
+    public int Soldier_count = 0;
     private void Start()
     {
         cameraHandler = GameObject.Find("Main Camera").GetComponent<CameraHandler>();
@@ -51,8 +53,11 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
 
                 GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
                 clone.tag = gameController.i_am_a;
+                clone.name = "Soldier_"+gameController.i_am_a+"_"+ Soldier_count;
+
                 attack_info attack_Info_ = new attack_info();
                 attack_Info_.name = "Soldier";
+                attack_Info_.object_name = clone.name;
                 attack_Info_.tag = gameController.i_am_a;
                 attack_Info_.room_name = gameController.room_name;
                 // attack_Info_.position = slashcheck(Round(wordPos.x, 4) + "," + Round(wordPos.y, 4) + "," + Round(clone.transform.position.z,5));
@@ -61,6 +66,8 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
                 attack_Info_.position = wordPos.x.ToString("F4") + "," + wordPos.y.ToString("F4") + "," + wordPos.z.ToString("F4");
 
                 netconnection.attackReq(attack_Info_);
+
+                Soldier_count++;
             }
         }
         cameraHandler.enabled = true;
@@ -72,6 +79,7 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
         Vector3 new_pos= JsonToVec(attack_Info_.position);
         Debug.Log(new_pos);
         GameObject clone = Instantiate(gameobject, new_pos, Quaternion.identity);
+        clone.name = attack_Info_.object_name;
         clone.tag = attack_Info_.tag;
     }
     public void OnEndDrag(PointerEventData eventData)

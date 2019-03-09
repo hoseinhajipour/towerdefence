@@ -125,6 +125,9 @@ public class Soldier : MonoBehaviour
             {
                 dead = true;
                 Debug.Log("Soldier dead");
+
+                sendDeadMsg();
+
                 reward_per_kill();
                 gameObject.tag = "dead";
                 gameObject.layer = 0;
@@ -159,6 +162,18 @@ public class Soldier : MonoBehaviour
         {
             gb.total_Coin += coin_for_dead_me;
         }
+    }
+
+    public void sendDeadMsg()
+    {
+        newConnection netconnection;
+        GameController gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
+        DeadInfo deadInfo = new DeadInfo();
+        deadInfo.tag = gameObject.tag;
+        deadInfo.object_name = gameObject.name;
+        deadInfo.room_name = gameController.room_name;
+        netconnection.DoDead(deadInfo);
     }
     
 }
