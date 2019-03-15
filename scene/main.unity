@@ -4558,6 +4558,7 @@ MonoBehaviour:
   Left_area: {fileID: 1883032549}
   right_area: {fileID: 869870376}
   area_create: {fileID: 0}
+  Soldier_count: 0
 --- !u!114 &963352248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5669,7 +5670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 3}
       propertyPath: url
-      value: ws://hajigames-towerdefence.herokuapp.com/socket.io/?EIO=4&transport=websocket
+      value: ws://localhost:3000/socket.io/?EIO=4&transport=websocket
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 010d39cbd03ee4c99a746c1f8ecdc0d8, type: 3}
