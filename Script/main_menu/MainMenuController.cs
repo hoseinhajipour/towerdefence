@@ -9,6 +9,7 @@ public class MainMenuController : MonoBehaviour
 
     public InputField username;
     public Text coin_area;
+    public Text gem_area;
     void Start()
     {
         if (username != null)
@@ -21,7 +22,12 @@ public class MainMenuController : MonoBehaviour
         {
             coin_area.text = PlayerPrefs.GetInt("coin").ToString();
         }
-        
+
+        if (gem_area != null)
+        {
+            gem_area.text = PlayerPrefs.GetInt("gem").ToString();
+        }
+
     }
 
     // Update is called once per frame
@@ -52,5 +58,13 @@ public class MainMenuController : MonoBehaviour
     public void LoadMenuBtn()
     {
         SceneManager.LoadScene("menu");
+    }
+    public void LoadVsComputer()
+    {
+        SceneManager.LoadScene("vsComputer");
+    }
+    public void Load2v2()
+    {
+        SceneManager.LoadScene("2v2");
     }
 }

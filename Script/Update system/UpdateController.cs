@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class UpdateController : MonoBehaviour
 {
     public Text coin_text;
+    public GameObject enoughPanel;
     int coin = 0;
     public string charcter_name;
     public int current_level = 0;
     public int next_price;
 
-    public ch current_character_info;
+    public characterClass current_character_info;
 
 
     public Text text_level_number;
@@ -26,27 +27,10 @@ public class UpdateController : MonoBehaviour
     public Image character_icon;
 
 
-    [System.Serializable]
-    public class level
-    {
-        public int num;
-        public float create_rate;
-        public int attack_power;
-        public float move_speed;
-        public float attack_rate_per_second;
-        public int Health;
-        public int price;
-    }
+    
 
-    [System.Serializable]
-    public class ch
-    {
-        public string name;
-        public Sprite icon;
-        public string description;
-        public level[] levels;
-    }
-    public ch[] characters;
+    
+    public characterClass[] characters;
 
     void Start()
     {
@@ -101,15 +85,17 @@ public class UpdateController : MonoBehaviour
         else
         {
             Debug.Log("coin not enfoh");
+
+            enoughPanel.SetActive(true);
         }
         
 
     }
 
 
-    public ch findCharacterInfo(string name)
+    public characterClass findCharacterInfo(string name)
     {
-        ch ch_=new ch();
+        characterClass ch_ =new characterClass();
         for(int i = 0; i < characters.Length; i++)
         {
             if (characters[i].name == name)

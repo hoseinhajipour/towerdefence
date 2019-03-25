@@ -64,8 +64,11 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
 
                 Debug.Log("send : " + wordPos.x + "," + wordPos.y + "," + wordPos.z);
                 attack_Info_.position = wordPos.x.ToString("F4") + "," + wordPos.y.ToString("F4") + "," + wordPos.z.ToString("F4");
-
-                netconnection.attackReq(attack_Info_);
+                if (netconnection != null)
+                {
+                    netconnection.attackReq(attack_Info_);
+                }
+                
 
                 Soldier_count++;
             }
