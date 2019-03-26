@@ -21,27 +21,64 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
     public GameObject area_create;
 
     public int Soldier_count = 0;
+
+    private UpdateController userInfo;
+    private characterClass ch;
+    private int current_level;
+
+    public bool canCreate = false;
+    public float createRate = 3.0f;
+    private float nextCreate;
+
     private void Start()
     {
         cameraHandler = GameObject.Find("Main Camera").GetComponent<CameraHandler>();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
 
-        
+        if (GameObject.Find("SocketIO") != null)
+        {
+            netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
+        }
+
+        userInfo = GameObject.Find("AllCharacterInfo").GetComponent<UpdateController>();
+        ch = userInfo.findCharacterInfo("Soldier");
+        current_level = PlayerPrefs.GetInt("Soldier_level");
+        createRate = ch.levels[current_level].create_rate;
+
+        Debug.Log("Soldier_level : " + current_level);
     }
+    void Update()
+    {
+        if (Time.time > nextCreate)
+        {
+            canCreate = true;
+            nextCreate = Time.time + createRate;
+        }
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
-        setCreate_side();
-        transform.position = Input.mousePosition;
-        cameraHandler.enabled = false;
-        area_create.SetActive(true);
+        if (canCreate)
+        {
+            setCreate_side();
+            transform.position = Input.mousePosition;
+            cameraHandler.enabled = false;
+            area_create.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("you can't create");
+        }
+        
     }
+
 
     public void OnDrop(PointerEventData eventData)
     {
         
         if (Input.GetMouseButtonUp(0))
         {
+            canCreate = false;
             Vector3 wordPos;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -54,13 +91,15 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
                 GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
                 clone.tag = gameController.i_am_a;
                 clone.name = "Soldier_"+gameController.i_am_a+"_"+ Soldier_count;
+                clone.GetComponent<Soldier>().current_level = current_level;
 
                 attack_info attack_Info_ = new attack_info();
                 attack_Info_.name = "Soldier";
                 attack_Info_.object_name = clone.name;
                 attack_Info_.tag = gameController.i_am_a;
                 attack_Info_.room_name = gameController.room_name;
-                // attack_Info_.position = slashcheck(Round(wordPos.x, 4) + "," + Round(wordPos.y, 4) + "," + Round(clone.transform.position.z,5));
+                attack_Info_.level = current_level;
+
 
                 Debug.Log("send : " + wordPos.x + "," + wordPos.y + "," + wordPos.z);
                 attack_Info_.position = wordPos.x.ToString("F4") + "," + wordPos.y.ToString("F4") + "," + wordPos.z.ToString("F4");
@@ -68,8 +107,6 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
                 {
                     netconnection.attackReq(attack_Info_);
                 }
-                
-
                 Soldier_count++;
             }
         }
@@ -84,6 +121,9 @@ public class SoldierGenerator : MonoBehaviour, IDragHandler,IEndDragHandler,IDro
         GameObject clone = Instantiate(gameobject, new_pos, Quaternion.identity);
         clone.name = attack_Info_.object_name;
         clone.tag = attack_Info_.tag;
+        clone.GetComponent<Soldier>().current_level = attack_Info_.level;
+
+
     }
     public void OnEndDrag(PointerEventData eventData)
     {

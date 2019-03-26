@@ -40,6 +40,10 @@ public class Soldier : MonoBehaviour
     public AudioClip attack_sound;
     public AudioClip dead_sound;
     AudioSource audio;
+
+    private UpdateController userInfo;
+    private characterClass ch;
+    public int current_level;
     void Start()
     {
 
@@ -60,6 +64,15 @@ public class Soldier : MonoBehaviour
         enemyCastle = GameObject.Find(target_castle_tag);
 
         audio = gameObject.GetComponent<AudioSource>();
+
+
+        userInfo = GameObject.Find("AllCharacterInfo").GetComponent<UpdateController>();
+        ch=userInfo.findCharacterInfo("Soldier");
+        current_level = PlayerPrefs.GetInt("Soldier_level");
+        health = ch.levels[current_level].Health;
+        speed_movment = ch.levels[current_level].move_speed;
+        damage_power = ch.levels[current_level].attack_power;
+        atackRate = ch.levels[current_level].attack_rate_per_second;
     }
 
     void Update()
@@ -112,7 +125,6 @@ public class Soldier : MonoBehaviour
 
                     float rnd_dmg=  Random.Range(damage_power/1.2f, damage_power);
                     current_traget.SendMessage("ApplyDamage", damage_power);
-                    Debug.Log("attack");
                     nextAttack = Time.time + atackRate;
                 }
             }
@@ -168,12 +180,17 @@ public class Soldier : MonoBehaviour
     {
         newConnection netconnection;
         GameController gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
-        DeadInfo deadInfo = new DeadInfo();
-        deadInfo.tag = gameObject.tag;
-        deadInfo.object_name = gameObject.name;
-        deadInfo.room_name = gameController.room_name;
-        netconnection.DoDead(deadInfo);
+        if (GameObject.Find("SocketIO") != null)
+        {
+            netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
+            DeadInfo deadInfo = new DeadInfo();
+            deadInfo.tag = gameObject.tag;
+            deadInfo.object_name = gameObject.name;
+            deadInfo.room_name = gameController.room_name;
+            netconnection.DoDead(deadInfo);
+        }
+
+        
     }
     
 }

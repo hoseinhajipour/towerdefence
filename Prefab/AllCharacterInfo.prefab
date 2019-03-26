@@ -99,14 +99,14 @@ MonoBehaviour:
       attack_power: 0
       move_speed: 0
       attack_rate_per_second: 0
-      Health: 0
+      Health: 100
       price: 0
     - num: 0
       create_rate: 0
       attack_power: 0
       move_speed: 0
       attack_rate_per_second: 0
-      Health: 0
+      Health: 100
       price: 50
     - num: 0
       create_rate: 0
@@ -134,14 +134,14 @@ MonoBehaviour:
       attack_power: 0
       move_speed: 0
       attack_rate_per_second: 0
-      Health: 0
+      Health: 100
       price: 250
     - num: 0
-      create_rate: 0
-      attack_power: 0
+      create_rate: 4.41
+      attack_power: 177
       move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
+      attack_rate_per_second: 4.4
+      Health: 105
       price: 300
     - num: 0
       create_rate: 0
@@ -151,18 +151,18 @@ MonoBehaviour:
       Health: 0
       price: 350
     - num: 0
-      create_rate: 0
+      create_rate: 0.36
       attack_power: 0
       move_speed: 0
       attack_rate_per_second: 0
-      Health: 0
+      Health: 107
       price: 401
     - num: 0
       create_rate: 0
       attack_power: 0
       move_speed: 0
       attack_rate_per_second: 0
-      Health: 0
+      Health: 108
       price: 507
   - name: Archer
     icon: {fileID: 21300000, guid: 9b40cae0b02f46845aa18be3df0f39e6, type: 3}

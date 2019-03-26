@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using System.Text.RegularExpressions;
 
-public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDropHandler
+public class CharacterGenerator : MonoBehaviour, IDragHandler, IEndDragHandler, IDropHandler
 {
-
     public GameObject gameobject;
-
+    public String character_name;
     CameraHandler cameraHandler;
     GameController gameController;
     newConnection netconnection;
@@ -18,11 +19,11 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
 
     public GameObject area_create;
 
+    public int Create_count = 0;
 
     private UpdateController userInfo;
     private characterClass ch;
     private int current_level;
-
 
     public bool canCreate = false;
     public float createRate = 3.0f;
@@ -33,21 +34,17 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
         cameraHandler = GameObject.Find("Main Camera").GetComponent<CameraHandler>();
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
-        if(GameObject.Find("SocketIO") != null)
+        if (GameObject.Find("SocketIO") != null)
         {
             netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
         }
-        
-
 
         userInfo = GameObject.Find("AllCharacterInfo").GetComponent<UpdateController>();
-        ch = userInfo.findCharacterInfo("Shower");
-        current_level = PlayerPrefs.GetInt("Shower_level");
+        ch = userInfo.findCharacterInfo(character_name);
+        current_level = PlayerPrefs.GetInt(character_name+"_level");
         createRate = ch.levels[current_level].create_rate;
 
-        Debug.Log("Shower_level : "+current_level);
     }
-
     void Update()
     {
         if (Time.time > nextCreate)
@@ -70,10 +67,13 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
         {
             Debug.Log("you can't create");
         }
+
     }
+
 
     public void OnDrop(PointerEventData eventData)
     {
+
         if (Input.GetMouseButtonUp(0))
         {
             canCreate = false;
@@ -83,32 +83,46 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
             int layer_mask = LayerMask.GetMask("area_create");
             if (Physics.Raycast(ray, out hit, 1000f, layer_mask))
             {
+                Debug.Log("hit");
                 wordPos = hit.point;
 
                 GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
                 clone.tag = gameController.i_am_a;
+                clone.name = character_name+"_" + gameController.i_am_a + "_" + Create_count;
+                clone.GetComponent<Soldier>().current_level = current_level;
 
-                if(netconnection != null)
+                 if (netconnection != null)
                 {
                     attack_info attack_Info_ = new attack_info();
-                    attack_Info_.name = "Shower";
+                    attack_Info_.name = character_name;
+                    attack_Info_.object_name = clone.name;
                     attack_Info_.tag = gameController.i_am_a;
                     attack_Info_.room_name = gameController.room_name;
-                    attack_Info_.position = slashcheck(Round(wordPos.x, 4) + "," + Round(wordPos.y, 4) + "," + Round(wordPos.z, 4));
+                    attack_Info_.level = current_level;
+
+
+                    Debug.Log("send : " + wordPos.x + "," + wordPos.y + "," + wordPos.z);
+                    attack_Info_.position = wordPos.x.ToString("F4") + "," + wordPos.y.ToString("F4") + "," + wordPos.z.ToString("F4");
+
                     netconnection.attackReq(attack_Info_);
                 }
+                Create_count++;
             }
-            
-           
         }
         cameraHandler.enabled = true;
         area_create.SetActive(false);
     }
+
     public void directCreate(attack_info attack_Info_)
     {
         Vector3 new_pos = JsonToVec(attack_Info_.position);
+        Debug.Log(new_pos);
         GameObject clone = Instantiate(gameobject, new_pos, Quaternion.identity);
+        clone.name = attack_Info_.object_name;
         clone.tag = attack_Info_.tag;
+        clone.GetComponent<Soldier>().current_level = attack_Info_.level;
+
+
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -123,14 +137,20 @@ public class ShowerGenarator : MonoBehaviour, IDragHandler, IEndDragHandler, IDr
     public Vector3 JsonToVec(string target)
     {
         Vector3 newvector;
-        string[] newS = Regex.Split(target, ",");
-        newvector = new Vector3(float.Parse(newS[0]), float.Parse(newS[1]), float.Parse(newS[2]));
+        string[] newS = target.Split(new string[] { "," }, StringSplitOptions.None);
+        newvector = new Vector3(
+             Single.Parse(newS[0]),
+              Single.Parse(newS[1]),
+               Single.Parse(newS[2])
+            );
         return newvector;
     }
+
     public string slashcheck(string str)
     {
         return str.Replace('/', '.');
     }
+
     public void setCreate_side()
     {
         if (gameController.i_am_a == "own")

@@ -15,8 +15,10 @@ public class Castle : MonoBehaviour
     public int coin_for_dead_me = 10;
     void Start()
     {
-        //    gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
+        if (GameObject.Find("SocketIO") != null)
+        {
+            netconnection = GameObject.Find("SocketIO").GetComponent<newConnection>();
+        }
     }
 
     void Update()
@@ -40,7 +42,11 @@ public class Castle : MonoBehaviour
                     gameController.showDefeatPanel();
                 }
                 end_game_save();
-                netconnection.do_end_ballte();
+                if(netconnection != null)
+                {
+                    netconnection.do_end_ballte();
+                }
+                
             }
         }else{
             

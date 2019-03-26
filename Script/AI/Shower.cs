@@ -29,6 +29,11 @@ public class Shower : MonoBehaviour
     public AudioClip dead_sound;
     AudioSource audio;
 
+
+    private UpdateController userInfo;
+    private characterClass ch;
+    public int current_level;
+
     void Start()
     {
         head = transform.Find("head").transform;
@@ -47,6 +52,14 @@ public class Shower : MonoBehaviour
         }
 
         audio = gameObject.GetComponent<AudioSource>();
+
+
+        userInfo = GameObject.Find("AllCharacterInfo").GetComponent<UpdateController>();
+        ch = userInfo.findCharacterInfo("Shower");
+        current_level = PlayerPrefs.GetInt("Shower_level");
+        health = ch.levels[current_level].Health;
+        damage_power = ch.levels[current_level].attack_power;
+        fireRate = ch.levels[current_level].attack_rate_per_second;
     }
 
 
