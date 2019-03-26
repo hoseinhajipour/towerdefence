@@ -34,8 +34,12 @@ public class UpdateController : MonoBehaviour
 
     void Start()
     {
-        coin = PlayerPrefs.GetInt("coin");
-        coin_text.text = coin.ToString();
+        if (coin_text != null)
+        {
+            coin = PlayerPrefs.GetInt("coin");
+            coin_text.text = coin.ToString();
+        }
+        
 
     }
 

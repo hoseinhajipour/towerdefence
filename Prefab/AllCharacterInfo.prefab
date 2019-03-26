@@ -1,0 +1,240 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5560244289265563347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5560244289265563345}
+  - component: {fileID: 5560244289265563344}
+  m_Layer: 0
+  m_Name: AllCharacterInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5560244289265563345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5560244289265563347}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5560244289265563344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5560244289265563347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 4569a6aefab219a4dbeef34a36e51b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coin_text: {fileID: 0}
+  enoughPanel: {fileID: 0}
+  charcter_name: 
+  current_level: 0
+  next_price: 0
+  current_character_info:
+    name: 
+    icon: {fileID: 0}
+    description: 
+    levels: []
+  text_level_number: {fileID: 0}
+  text_name: {fileID: 0}
+  text_description: {fileID: 0}
+  text_create_rate: {fileID: 0}
+  text_attack_power: {fileID: 0}
+  text_move_speed: {fileID: 0}
+  text_attack_rate_per_second: {fileID: 0}
+  Health: {fileID: 0}
+  update_btn: {fileID: 0}
+  character_icon: {fileID: 0}
+  characters:
+  - name: Soldier
+    icon: {fileID: 21300000, guid: 6bc71697ee286a846a5688e85b6f164d, type: 3}
+    description: desc
+    levels:
+    - num: 0
+      create_rate: 3
+      attack_power: 10
+      move_speed: 3
+      attack_rate_per_second: 3
+      Health: 100
+      price: 0
+    - num: 1
+      create_rate: 2
+      attack_power: 15
+      move_speed: 4
+      attack_rate_per_second: 2
+      Health: 150
+      price: 50
+    - num: 2
+      create_rate: 1.5
+      attack_power: 20
+      move_speed: 5
+      attack_rate_per_second: 1.5
+      Health: 180
+      price: 150
+  - name: Shower
+    icon: {fileID: 21300000, guid: 9b40cae0b02f46845aa18be3df0f39e6, type: 3}
+    description: tozih
+    levels:
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 0
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 50
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 100
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 150
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 200
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 250
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 300
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 350
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 401
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 507
+  - name: Archer
+    icon: {fileID: 21300000, guid: 9b40cae0b02f46845aa18be3df0f39e6, type: 3}
+    description: tozih
+    levels:
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 0
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 50
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 100
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 150
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 200
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 250
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 300
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 350
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 401
+    - num: 0
+      create_rate: 0
+      attack_power: 0
+      move_speed: 0
+      attack_rate_per_second: 0
+      Health: 0
+      price: 507

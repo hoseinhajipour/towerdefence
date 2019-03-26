@@ -14,7 +14,7 @@ public class characterInfo : MonoBehaviour
 
     void Start()
     {
-        UpdateController_ = GameObject.Find("MainMenuController").GetComponent<UpdateController>();
+        UpdateController_ = GameObject.Find("AllCharacterInfo").GetComponent<UpdateController>();
 
         characterClass ch = UpdateController_.findCharacterInfo(name);
         current_level = PlayerPrefs.GetInt(charcter_name + "_level");

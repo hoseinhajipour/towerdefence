@@ -396,7 +396,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1563526343}
+      - m_Target: {fileID: 1140771970}
         m_MethodName: setCharacter
         m_Mode: 5
         m_Arguments:
@@ -1722,7 +1722,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563526341}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadShopBtn
         m_Mode: 1
         m_Arguments:
@@ -1893,7 +1893,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563526343}
+      - m_Target: {fileID: 1140771970}
         m_MethodName: DoUpdateCharacter
         m_Mode: 1
         m_Arguments:
@@ -2629,7 +2629,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1563526343}
+      - m_Target: {fileID: 1140771970}
         m_MethodName: setCharacter
         m_Mode: 5
         m_Arguments:
@@ -2696,6 +2696,19 @@ MonoBehaviour:
   charcter_name: Shower
   level_text: {fileID: 118796513}
   current_level: 0
+--- !u!114 &1140771970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+    type: 3}
+  m_PrefabInstance: {fileID: 5560244290337094226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 4569a6aefab219a4dbeef34a36e51b09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1152471705
 GameObject:
   m_ObjectHideFlags: 0
@@ -3427,7 +3440,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1563526341}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadMenuBtn
         m_Mode: 1
         m_Arguments:
@@ -3524,7 +3537,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1563526342}
   - component: {fileID: 1563526341}
-  - component: {fileID: 1563526343}
   m_Layer: 0
   m_Name: MainMenuController
   m_TagString: Untagged
@@ -3562,139 +3574,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1563526343
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563526340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_GeneratorAsset: {fileID: 0}
-  m_Script: {fileID: 11500000, guid: 4569a6aefab219a4dbeef34a36e51b09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coin_text: {fileID: 682444371}
-  enoughPanel: {fileID: 561934615}
-  charcter_name: 
-  current_level: 0
-  next_price: 0
-  current_character_info:
-    name: 
-    icon: {fileID: 0}
-    description: 
-    levels: []
-  text_level_number: {fileID: 1968277557}
-  text_name: {fileID: 601313824}
-  text_description: {fileID: 440722127}
-  text_create_rate: {fileID: 993652717}
-  text_attack_power: {fileID: 1699019029}
-  text_move_speed: {fileID: 1307620727}
-  text_attack_rate_per_second: {fileID: 1289277355}
-  Health: {fileID: 1081494164}
-  update_btn: {fileID: 1651202190}
-  character_icon: {fileID: 660319793}
-  characters:
-  - name: Soldier
-    icon: {fileID: 21300000, guid: 6bc71697ee286a846a5688e85b6f164d, type: 3}
-    description: desc
-    levels:
-    - num: 0
-      create_rate: 3
-      attack_power: 10
-      move_speed: 3
-      attack_rate_per_second: 3
-      Health: 100
-      price: 0
-    - num: 1
-      create_rate: 2
-      attack_power: 15
-      move_speed: 4
-      attack_rate_per_second: 2
-      Health: 150
-      price: 50
-    - num: 2
-      create_rate: 1.5
-      attack_power: 20
-      move_speed: 5
-      attack_rate_per_second: 1.5
-      Health: 180
-      price: 150
-  - name: Shower
-    icon: {fileID: 21300000, guid: 9b40cae0b02f46845aa18be3df0f39e6, type: 3}
-    description: tozih
-    levels:
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 0
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 50
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 100
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 150
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 200
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 250
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 300
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 350
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 401
-    - num: 0
-      create_rate: 0
-      attack_power: 0
-      move_speed: 0
-      attack_rate_per_second: 0
-      Health: 0
-      price: 507
 --- !u!1 &1651202188
 GameObject:
   m_ObjectHideFlags: 0
@@ -4817,3 +4696,132 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &5560244290337094226
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5560244289265563347, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_Name
+      value: AllCharacterInfo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563345, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: coin_text
+      value: 
+      objectReference: {fileID: 682444371}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: enoughPanel
+      value: 
+      objectReference: {fileID: 561934615}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_level_number
+      value: 
+      objectReference: {fileID: 1968277557}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_name
+      value: 
+      objectReference: {fileID: 601313824}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_description
+      value: 
+      objectReference: {fileID: 440722127}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_create_rate
+      value: 
+      objectReference: {fileID: 993652717}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_attack_power
+      value: 
+      objectReference: {fileID: 1699019029}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_move_speed
+      value: 
+      objectReference: {fileID: 1307620727}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: text_attack_rate_per_second
+      value: 
+      objectReference: {fileID: 1289277355}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: Health
+      value: 
+      objectReference: {fileID: 1081494164}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: update_btn
+      value: 
+      objectReference: {fileID: 1651202190}
+    - target: {fileID: 5560244289265563344, guid: 949192f238124824b9221c5ab65061fc,
+        type: 3}
+      propertyPath: character_icon
+      value: 
+      objectReference: {fileID: 660319793}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 949192f238124824b9221c5ab65061fc, type: 3}
