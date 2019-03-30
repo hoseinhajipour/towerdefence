@@ -17,7 +17,7 @@ public class CharacterGenerator : MonoBehaviour, IDragHandler, IEndDragHandler, 
     public GameObject Left_area;
     public GameObject right_area;
 
-    public GameObject area_create;
+    private GameObject area_create;
 
     public int Create_count = 0;
 
@@ -25,7 +25,7 @@ public class CharacterGenerator : MonoBehaviour, IDragHandler, IEndDragHandler, 
     private characterClass ch;
     private int current_level;
 
-    public bool canCreate = false;
+    private bool canCreate = false;
     public float createRate = 3.0f;
     private float nextCreate;
 
@@ -89,7 +89,7 @@ public class CharacterGenerator : MonoBehaviour, IDragHandler, IEndDragHandler, 
                 GameObject clone = Instantiate(gameobject, wordPos, Quaternion.identity);
                 clone.tag = gameController.i_am_a;
                 clone.name = character_name+"_" + gameController.i_am_a + "_" + Create_count;
-                clone.GetComponent<Soldier>().current_level = current_level;
+              //  clone.GetComponent<AgentInfo>().current_level = current_level;
 
                  if (netconnection != null)
                 {

@@ -10,12 +10,14 @@ public class MainMenuController : MonoBehaviour
     public InputField username;
     public Text coin_area;
     public Text gem_area;
+    public Text Curent_username;
     void Start()
     {
         if (username != null)
         {
             string username_ = PlayerPrefs.GetString("username");
             username.text = username_;
+            Curent_username.text = username_;
         }
 
         if(coin_area != null)
